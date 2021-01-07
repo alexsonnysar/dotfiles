@@ -74,5 +74,8 @@ zinit light zsh-users/zsh-syntax-highlighting
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# remove useless space on right side
+ZLE_RPROMPT_INDENT=0
+
 # Aliases
 alias dotfiles='/usr/bin/git --git-dir=/home/alexsonnysar/.dotfiles/ --work-tree=/home/alexsonnysar'
