@@ -1,4 +1,4 @@
-# Detect OS/distro
+# Detect OS
 if [[ "$(uname)" == "Darwin" ]]; then
   OS="macos"
 elif [[ "$(uname)" == "Linux" ]]; then
@@ -18,6 +18,9 @@ autoload -Uz compinit
 compinit
 
 # Aliases
+alias ls="eza --icons"
+alias la="eza --all --icons"
+alias lt="eza --tree --icons"
 
 # Starship
 eval "$(starship init zsh)"
@@ -42,6 +45,6 @@ elif [[ "$OS" == "arch" ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
