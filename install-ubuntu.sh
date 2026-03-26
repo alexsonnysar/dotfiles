@@ -32,6 +32,7 @@ sudo -v
 echo ""
 echo "📦 Updating and upgrading distro packages..."
 run_step "apt update && apt upgrade"   sudo apt update && sudo apt upgrade -y
+
 echo ""
 echo "📦 Installing core packages..."
 for pkg in zsh stow git zip unzip curl bash build-essential; do
