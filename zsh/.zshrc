@@ -1,3 +1,10 @@
+# Detect OS/distro
+if [[ "$(uname)" == "Darwin" ]]; then
+  OS="macos"
+elif [[ "$(uname)" == "Linux" ]]; then
+  OS=$(grep ^ID= /etc/os-release | cut -d= -f2)
+fi
+
 # History
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000000
@@ -22,8 +29,18 @@ eval "$(zoxide init zsh)"
 eval "$($HOME/.local/bin/mise activate zsh)"
 
 # Plugins
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ "$OS" == "macos" ]]; then
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+elif [[ "$OS" == "ubuntu" ]]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+elif [[ "$OS" == "arch" ]]; then
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
