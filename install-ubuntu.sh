@@ -29,10 +29,9 @@ run_step() {
 echo "🔒 Enter superuser credentials..."
 sudo -v
 
-echo "📦 Updating package lists..."
-run_step "apt update"   sudo apt update
-run_step "apt upgrade"  sudo apt upgrade -y
-
+echo ""
+echo "📦 Updating and upgrading distro packages..."
+run_step "apt update && apt upgrade"   sudo apt update && sudo apt upgrade -y
 echo ""
 echo "📦 Installing core packages..."
 for pkg in zsh stow git zip unzip curl bash build-essential; do
@@ -50,8 +49,8 @@ run_step "stow dotfiles" bash -c "cd \"$DOTFILES_DIR\" && stow */"
 echo ""
 echo "📦 Installing Homebrew..."
 if ! command -v brew &>/dev/null; then
-    run_step "Homebrew" env NONINTERACTIVE=1 /bin/bash -c \
-        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    _brew_install=$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+    run_step "Homebrew" env NONINTERACTIVE=1 /bin/bash -c "$_brew_install"
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 else
     printf "  \033[0;32m✓\033[0m Homebrew already installed\n"
