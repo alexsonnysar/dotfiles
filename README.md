@@ -1,37 +1,58 @@
 # My Dotfiles
 
-> **WIP:** This README is still a work in progress and largely AI-generated. Will be customized over time as I settle on a universal config across Ubuntu, Arch, and macOS.
+Hey y'all! This is how I setup my dotfiles when switching between macOS, Arch, and Ubuntu. I'm using [GNU Stow](https://www.gnu.org/software/stow/) to symlink configuration files from this repo into `~`.
 
-Hey y'all! This is how I setup my dotfiles when switching between MacOS and Linux Distros. I'm using [GNU Stow](https://www.gnu.org/software/stow/) to symlink configuration files from this repo into `~`. I'll be updating this README as I get closer to a universal setup.
+## Installation
 
-## Installation (Ubuntu)
-
-Clone the repo, then run the install script:
+Clone the repo, then run the install script for your platform:
 
 ```bash
 git clone https://github.com/alexsonnysar/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
+```
+
+### Arch
+
+```bash
+bash install-arch.sh
+```
+
+The script will:
+
+1. Prompt for `sudo` credentials
+2. Install all packages via `pacman`
+3. Stow all dotfile packages
+
+### macOS
+
+```bash
+bash install-macos.sh
+```
+
+The script will:
+
+1. Prompt for `sudo` credentials
+2. Install Xcode Command Line Tools
+3. Install [Homebrew](https://brew.sh/)
+4. Install all packages via Homebrew
+5. Stow all dotfile packages
+
+### Ubuntu
+
+```bash
 bash install-ubuntu.sh
 ```
 
 The script will:
 
 1. Prompt for `sudo` credentials
-2. Run `apt update && apt upgrade`
-3. Install core packages: `zsh`, `stow`, `git`, `zip`, `unzip`, `curl`, `bash`, `build-essential`
-4. Set Zsh as the default shell
-5. Stow all dotfile packages (`stow */`)
-6. Install [Homebrew](https://brew.sh/) (if not already installed)
-7. Install CLI tools via Homebrew: `starship`, `zoxide`, `fzf`, `eza`, `zsh-syntax-highlighting`, `zsh-autosuggestions`, `fastfetch`
-8. Install dev tools:
-   - **[mise](https://mise.jdx.dev/)** — runtime version manager (replaces asdf/nvm/pyenv)
-   - **[SDKMAN](https://sdkman.io/)** — SDK manager for JVM-based tools (Java, Gradle, Maven, etc.)
+2. Run `apt update && apt upgrade` and install core packages (`zsh`, `stow`, `git`, `curl`, `build-essential`, etc.)
+3. Set Zsh as the default shell
+4. Install [Homebrew](https://brew.sh/)
+5. Install CLI tools via Homebrew
+6. Stow all dotfile packages
 
-Restart your terminal after the script completes to apply all changes.
-
----
-
-### WSL Setup
+### WSL
 
 If running on WSL, first open PowerShell and install a distro:
 
@@ -40,7 +61,7 @@ wsl --list --online
 wsl --install Ubuntu-<version>
 ```
 
-Then clone and run the install script as above.
+Then clone and run the Ubuntu install script as above.
 
 ---
 
@@ -56,7 +77,6 @@ Then clone and run the install script as above.
 | [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) | Fish-like autosuggestions |
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info fetch tool |
 | [mise](https://mise.jdx.dev/) | Runtime version manager (node, python, etc.) |
-| [SDKMAN](https://sdkman.io/) | JVM SDK manager (Java, Gradle, Maven, etc.) |
 
 ---
 
