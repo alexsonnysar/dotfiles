@@ -4,17 +4,16 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/.dotfiles"
 
-APT_PACKAGES=(
+PREREQUISITES=(
+    build-essential
+    curl
+    git
+    unzip
+    zip
+)
+BREW_PACKAGES=(
     zsh
     stow
-    git
-    zip
-    unzip
-    curl
-    build-essential
-)
-
-BREW_PACKAGES=(
     starship
     zoxide
     fzf
@@ -49,11 +48,10 @@ request_sudo() {
     success "Sudo privileges granted."
 }
 
-install_apt_packages() {
-    log "📦 Updating apt and installing core packages..."
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install -y "${APT_PACKAGES[@]}"
-    success "APT package installation complete."
+install_prerequisites() {
+    log "📦 Installing prerequisites..."
+    sudo apt update && sudo apt install -y --no-upgrade "${PREREQUISITES[@]}"
+    success "Prerequisites installed."
 }
 
 configure_shell() {
@@ -88,7 +86,7 @@ stow_dotfiles() {
 main() {
     request_sudo
     log "Starting dotfiles installation..."
-    install_apt_packages
+    install_prerequisites
     configure_shell
     install_homebrew
     install_brew_packages

@@ -4,6 +4,14 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/.dotfiles"
 
+PREREQUISITES=(
+    base-devel
+    git
+    curl
+    wget
+    zip
+    unzip
+)
 PACKAGES=(
     zsh
     stow
@@ -41,6 +49,12 @@ request_sudo() {
     success "Sudo privileges granted."
 }
 
+install_prerequisites() {
+    log "📦 Installing prerequisites..."
+    sudo pacman -S --noconfirm --needed "${PREREQUISITES[@]}"
+    success "Prerequisites installed."
+}
+
 install_packages() {
     log "📦 Installing packages..."
     sudo pacman -S --noconfirm --needed "${PACKAGES[@]}"
@@ -55,7 +69,7 @@ stow_dotfiles() {
     success "Stow complete."
 }
 
-change_default_shell() {
+configure_shell() {
     log "💲 Setting Zsh as default shell..."
     sudo usermod -s "$(which zsh)" "$USER"
     success "Default shell set to Zsh."
@@ -66,7 +80,9 @@ change_default_shell() {
 main() {
     request_sudo
     log "Starting dotfiles installation..."
+    install_prerequisites
     install_packages
+    configure_shell
     stow_dotfiles
     success "Dotfiles installed successfully."
 }
