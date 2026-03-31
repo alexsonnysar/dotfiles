@@ -10,9 +10,9 @@ PREREQUISITES=(
     git
     unzip
     zip
+    zsh
 )
 BREW_PACKAGES=(
-    zsh
     stow
     starship
     zoxide
@@ -23,6 +23,7 @@ BREW_PACKAGES=(
     fastfetch
     mise
     wget
+    nvim
 )
 
 # ── Colors ─────────────────────────────────────────────────────────────────────

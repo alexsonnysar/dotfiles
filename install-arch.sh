@@ -5,6 +5,8 @@ set -euo pipefail
 DOTFILES_DIR="$HOME/.dotfiles"
 
 PREREQUISITES=(
+    sudo
+    nvim
     base-devel
     git
     curl
@@ -61,18 +63,18 @@ install_packages() {
     success "Package installation complete."
 }
 
+configure_shell() {
+    log "💲 Setting Zsh as default shell..."
+    sudo usermod -s "$(which zsh)" "$USER"
+    success "Default shell set to Zsh."
+}
+
 stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
     stow --adopt */
     git restore .
     success "Stow complete."
-}
-
-configure_shell() {
-    log "💲 Setting Zsh as default shell..."
-    sudo usermod -s "$(which zsh)" "$USER"
-    success "Default shell set to Zsh."
 }
 
 # ── Main ───────────────────────────────────────────────────────────────────────
