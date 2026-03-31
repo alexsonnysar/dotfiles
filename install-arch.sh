@@ -39,7 +39,7 @@ GREEN="\033[0;92m"
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 log()   { echo -e "${CYAN}[INFO]${RESET} $*"; }
-warn()  { echo -e "${YELLOW}[WARN]${RESET}  $*"; }
+warn()  { echo -e "${YELLOW}[WARN]${RESET} $*"; }
 error() { echo -e "${RED}[ERROR]${RESET} $*" >&2; exit 1; }
 success()  { echo -e "${GREEN}[SUCCESS]${RESET} $*"; }
 
