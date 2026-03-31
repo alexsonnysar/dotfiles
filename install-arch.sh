@@ -46,7 +46,7 @@ success()  { echo -e "${GREEN}[SUCCESS]${RESET} $*"; }
 # ── Steps ──────────────────────────────────────────────────────────────────────
 
 request_sudo() {
-    log "Requesting sudo privileges..."
+    log "🔒 Requesting sudo privileges..."
     sudo -v || error "Failed to obtain sudo privileges."
     success "Sudo privileges granted."
 }

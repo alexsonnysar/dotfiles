@@ -44,7 +44,7 @@ success()  { echo -e "${GREEN}[SUCCESS]${RESET} $*"; }
 # ── Steps ──────────────────────────────────────────────────────────────────────
 
 request_sudo() {
-    log "Requesting sudo privileges..."
+    log "🔒 Requesting sudo privileges..."
     sudo -v || error "Failed to obtain sudo privileges."
     success "Sudo privileges granted."
 }
@@ -62,14 +62,18 @@ configure_shell() {
 }
 
 install_homebrew() {
-    log "📦 Installing Homebrew..."
+    if command -v brew &>/dev/null; then
+        warn "Homebrew already installed, skipping."
+        return
+    fi
+    log "🍺 Installing Homebrew..."
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     success "Homebrew installed."
 }
 
 install_brew_packages() {
-    log "📦 Installing CLI tools via Homebrew..."
+    log "📦 Installing packages..."
     brew install "${BREW_PACKAGES[@]}"
     success "Brew package installation complete."
 }

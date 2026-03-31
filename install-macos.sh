@@ -36,19 +36,27 @@ success()  { echo -e "${GREEN}[SUCCESS]${RESET} $*"; }
 # ── Steps ──────────────────────────────────────────────────────────────────────
 
 request_sudo() {
-    log "Requesting sudo privileges..."
+    log "🔒 Requesting sudo privileges..."
     sudo -v || error "Failed to obtain sudo privileges."
     success "Sudo privileges granted."
 }
 
 install_xcode_cli() {
+    if xcode-select -p &>/dev/null; then
+        warn "Xcode Command Line Tools already installed, skipping."
+        return
+    fi
     log "🛠️ Installing Xcode Command Line Tools..."
     xcode-select --install
     success "Xcode Command Line Tools installed."
 }
 
 install_homebrew() {
-    log "📦 Installing Homebrew..."
+    if command -v brew &>/dev/null; then
+        warn "Homebrew already installed, skipping."
+        return
+    fi
+    log "🍺 Installing Homebrew..."
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
     success "Homebrew installed."
