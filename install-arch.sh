@@ -5,6 +5,7 @@ set -euo pipefail
 DOTFILES_DIR="$HOME/.dotfiles"
 
 PACKAGES=(
+    zsh
     stow
     starship
     zoxide
@@ -40,6 +41,12 @@ request_sudo() {
     success "Sudo privileges granted."
 }
 
+install_packages() {
+    log "📦 Installing packages..."
+    sudo pacman -S --noconfirm --needed "${PACKAGES[@]}"
+    success "Package installation complete."
+}
+
 stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
@@ -48,10 +55,10 @@ stow_dotfiles() {
     success "Stow complete."
 }
 
-install_packages() {
-    log "📦 Installing packages..."
-    sudo pacman -S --noconfirm --needed "${PACKAGES[@]}"
-    success "Package installation complete."
+change_default_shell() {
+    log "💲 Setting Zsh as default shell..."
+    sudo usermod -s "$(which zsh)" "$USER"
+    success "Default shell set to Zsh."
 }
 
 # ── Main ───────────────────────────────────────────────────────────────────────
@@ -59,8 +66,8 @@ install_packages() {
 main() {
     request_sudo
     log "Starting dotfiles installation..."
-    stow_dotfiles
     install_packages
+    stow_dotfiles
     success "Dotfiles installed successfully."
 }
 

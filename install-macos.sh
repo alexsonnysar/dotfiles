@@ -3,70 +3,81 @@
 set -euo pipefail
 
 DOTFILES_DIR="$HOME/.dotfiles"
-SPINCHARS='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
 
-run_step() {
-    local msg="$1"; shift
-    local i=0 code=0
-    "$@" &>/dev/null &
-    local pid=$!
-    tput civis 2>/dev/null || true
-    while kill -0 "$pid" 2>/dev/null; do
-        printf "\r  ${SPINCHARS:$i:1} %s" "$msg"
-        i=$(( (i + 1) % ${#SPINCHARS} ))
-        sleep 0.08
-    done
-    tput cnorm 2>/dev/null || true
-    wait "$pid" || code=$?
-    if [ $code -eq 0 ]; then
-        printf "\r  \033[0;32m✓\033[0m %s\n" "$msg"
-    else
-        printf "\r  \033[0;31m✗\033[0m %s (exit $code)\n" "$msg"
-        exit $code
-    fi
+PACKAGES=(
+    zsh
+    stow
+    starship
+    zoxide
+    fzf
+    eza
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    fastfetch
+    mise
+    wget
+)
+
+# ── Colors ─────────────────────────────────────────────────────────────────────
+
+RESET="\033[0m"
+CYAN="\033[0;96m"
+YELLOW="\033[0;93m"
+RED="\033[0;91m"
+GREEN="\033[0;92m"
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
+
+log()   { echo -e "${CYAN}[INFO]${RESET} $*"; }
+warn()  { echo -e "${YELLOW}[WARN]${RESET}  $*"; }
+error() { echo -e "${RED}[ERROR]${RESET} $*" >&2; exit 1; }
+success()  { echo -e "${GREEN}[SUCCESS]${RESET} $*"; }
+
+# ── Steps ──────────────────────────────────────────────────────────────────────
+
+request_sudo() {
+    log "Requesting sudo privileges..."
+    sudo -v || error "Failed to obtain sudo privileges."
+    success "Sudo privileges granted."
 }
 
-echo "🔒 Enter superuser credentials..."
-sudo -v
+install_xcode_cli() {
+    log "🛠️ Installing Xcode Command Line Tools..."
+    xcode-select --install
+    success "Xcode Command Line Tools installed."
+}
 
-echo ""
-echo "📦 Installing Homebrew..."
-if ! command -v brew &>/dev/null; then
-    _brew_install=$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
-    run_step "Homebrew" env NONINTERACTIVE=1 /bin/bash -c "$_brew_install"
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-else
-    printf "  \033[0;32m✓\033[0m Homebrew already installed\n"
-fi
+install_homebrew() {
+    log "📦 Installing Homebrew..."
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    success "Homebrew installed."
+}
 
-echo ""
-echo "🛠️ Install Command Line Tools..."
-if ! xcode-select -p &>/dev/null; then
-    run_step "Command Line Tools" xcode-select --install
-else
-    printf "  \033[0;32m✓\033[0m Command Line Tools already installed\n"
-fi
+install_packages() {
+    log "📦 Installing packages..."
+    brew install "${PACKAGES[@]}"
+    success "Package installation complete."
+}
 
-echo ""
-echo "📦 Installing core packages..."
-for pkg in zsh stow git zip unzip curl bash; do
-    run_step "$pkg" brew install "$pkg"
-done
+stow_dotfiles() {
+    log "➡️ Stowing dotfiles..."
+    cd "$DOTFILES_DIR"
+    stow --adopt */
+    git restore .
+    success "Stow complete."
+}
 
-echo ""
-echo "➡️ Symlinking dotfiles..."
-run_step "stow dotfiles" bash -c "cd \"$DOTFILES_DIR\" && stow */"
+# ── Main ───────────────────────────────────────────────────────────────────────
 
-echo ""
-echo "🔌 Installing CLI tools..."
-for pkg in starship zoxide fzf eza zsh-syntax-highlighting zsh-autosuggestions fastfetch; do
-    run_step "$pkg" brew install "$pkg"
-done
+main() {
+    request_sudo
+    log "Starting dotfiles installation..."
+    install_xcode_cli
+    install_homebrew
+    install_packages
+    stow_dotfiles
+    success "Dotfiles installed successfully."
+}
 
-echo ""
-echo "⚙️ Installing dev tools..."
-run_step "mise" brew install mise
-run_step "SDKMan" bash -c 'curl -s "https://get.sdkman.io" | bash'
-
-echo ""
-echo "Done! Please restart your terminal to apply all changes."
+main "$@"
