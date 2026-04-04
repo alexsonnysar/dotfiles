@@ -83,7 +83,7 @@ main() {
     request_sudo
     log "Starting dotfiles installation..."
     install_prerequisites
-    install_packages
+    install_cli_tools
     configure_shell
     stow_dotfiles
     success "Dotfiles installed successfully."
