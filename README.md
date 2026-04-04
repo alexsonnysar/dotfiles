@@ -1,5 +1,9 @@
 # My Dotfiles
 
+<p align="center">
+  <img width="800" height="503" alt="Screenshot 2026-04-04 at 7 42 05 AM" src="https://github.com/user-attachments/assets/4a7d51fe-7dca-4220-abd0-2894d11fead8" />
+</p>
+
 Hey y'all! This is how I setup my dotfiles when switching between macOS, Arch, and Ubuntu. I'm using [GNU Stow](https://www.gnu.org/software/stow/) to symlink configuration files from this repo into `~`.
 
 ## Installation
@@ -17,53 +21,17 @@ cd ~/.dotfiles
 bash install-arch.sh
 ```
 
-The script will:
-
-1. Prompt for `sudo` credentials
-2. Install all packages via `pacman`
-3. Stow all dotfile packages
-
 ### macOS
 
 ```bash
 bash install-macos.sh
 ```
 
-The script will:
-
-1. Prompt for `sudo` credentials
-2. Install Xcode Command Line Tools
-3. Install [Homebrew](https://brew.sh/)
-4. Install all packages via Homebrew
-5. Stow all dotfile packages
-
 ### Ubuntu
 
 ```bash
 bash install-ubuntu.sh
 ```
-
-The script will:
-
-1. Prompt for `sudo` credentials
-2. Run `apt update && apt upgrade` and install core packages (`zsh`, `stow`, `git`, `curl`, `build-essential`, etc.)
-3. Set Zsh as the default shell
-4. Install [Homebrew](https://brew.sh/)
-5. Install CLI tools via Homebrew
-6. Stow all dotfile packages
-
-### WSL
-
-If running on WSL, first open PowerShell and install a distro:
-
-```powershell
-wsl --list --online
-wsl --install Ubuntu-<version>
-```
-
-Then clone and run the Ubuntu install script as above.
-
----
 
 ## CLI Tools & Plugins
 
