@@ -25,9 +25,9 @@ autoload -Uz compinit
 compinit
 
 # Aliases
-alias ls="eza --icons"
-alias la="eza --all --icons"
-alias lt="eza --tree --icons"
+alias ls="eza --long --icons"
+alias la="eza --long --all --icons"
+alias lt="eza --long --tree --icons"
 
 # Starship
 eval "$(starship init zsh)"
