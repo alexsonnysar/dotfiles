@@ -12,19 +12,6 @@ PREREQUISITES=(
     zip
     zsh
 )
-BREW_PACKAGES=(
-    stow
-    starship
-    zoxide
-    fzf
-    eza
-    zsh-syntax-highlighting
-    zsh-autosuggestions
-    fastfetch
-    mise
-    wget
-    nvim
-)
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
 
@@ -72,10 +59,10 @@ install_homebrew() {
     success "Homebrew installed."
 }
 
-install_brew_packages() {
-    log "📦 Installing packages..."
-    brew install "${BREW_PACKAGES[@]}"
-    success "Brew package installation complete."
+install_cli_tools() {
+    log "📦 Installing CLI tools..."
+    brew bundle install
+    success "CLI tool installation complete."
 }
 
 stow_dotfiles() {
@@ -94,7 +81,7 @@ main() {
     install_prerequisites
     configure_shell
     install_homebrew
-    install_brew_packages
+    install_cli_tools
     stow_dotfiles
     success "Dotfiles installed successfully."
 }

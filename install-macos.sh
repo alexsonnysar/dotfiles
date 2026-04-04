@@ -4,19 +4,12 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/.dotfiles"
 
-PACKAGES=(
-    zsh
-    stow
-    starship
-    zoxide
-    fzf
-    eza
-    zsh-syntax-highlighting
-    zsh-autosuggestions
-    fastfetch
-    mise
-    wget
-    nvim
+CASK_PACKAGES=(
+    font-jetbrains-mono-nerd-font
+    ghostty
+    microsoft-edge
+    spotify
+    visual-studio-code
 )
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
@@ -63,16 +56,22 @@ install_homebrew() {
     success "Homebrew installed."
 }
 
-install_packages() {
-    log "📦 Installing packages..."
-    brew install "${PACKAGES[@]}"
-    success "Package installation complete."
+install_cli_tools() {
+    log "📦 Installing CLI tools..."
+    brew bundle install
+    success "CLI tool installation complete."
+}
+
+install_gui_apps() {
+    log "📦 Installing GUI apps..."
+    brew install --cask "${CASK_PACKAGES[@]}"
+    success "GUI app installation complete."
 }
 
 stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
-    stow --adopt */
+    stow --adopt */ 
     git restore .
     success "Stow complete."
 }
@@ -84,7 +83,8 @@ main() {
     log "Starting dotfiles installation..."
     install_xcode_cli
     install_homebrew
-    install_packages
+    install_cli_tools
+    install_gui_apps
     stow_dotfiles
     success "Dotfiles installed successfully."
 }

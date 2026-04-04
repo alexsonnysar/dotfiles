@@ -57,10 +57,10 @@ install_prerequisites() {
     success "Prerequisites installed."
 }
 
-install_packages() {
-    log "📦 Installing packages..."
+install_cli_tools() {
+    log "📦 Installing CLI tools..."
     sudo pacman -S --noconfirm --needed "${PACKAGES[@]}"
-    success "Package installation complete."
+    success "CLI tool installation complete."
 }
 
 configure_shell() {
