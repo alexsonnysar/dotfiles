@@ -25,7 +25,7 @@ symbol = " "
 symbol = " "
 
 [nodejs]
-symbol = " "
+symbol = "󰎙 "
 
 [zig]
 symbol = " "
