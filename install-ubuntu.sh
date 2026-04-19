@@ -65,6 +65,12 @@ install_cli_tools() {
     success "CLI tool installation complete."
 }
 
+install_zinit() {
+    log "🔌 Installing Zinit..."
+    bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+    success "Zinit installed."
+}
+
 stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
@@ -82,6 +88,7 @@ main() {
     configure_shell
     install_homebrew
     install_cli_tools
+    install_zinit
     stow_dotfiles
     success "Dotfiles installed successfully."
 }

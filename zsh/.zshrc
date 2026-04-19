@@ -20,33 +20,23 @@ setopt EXTENDED_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
-# Completion
-autoload -Uz compinit
-compinit
+# Zinit
+source "${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git/zinit.zsh"
+
+# Plugins & Completion
+autoload -Uz compinit && compinit
+zinit light zsh-users/zsh-completions
+zinit light aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
 # Aliases
-alias ls="eza --long --icons"
-alias la="eza --long --all --icons"
-alias lt="eza --long --tree --icons"
+alias ls="eza --icons"
+alias la="eza --all --icons"
+alias lt="eza --tree --icons --git-ignore"
 
-# Starship
+# Shell Integrations
 eval "$(starship init zsh)"
-
-# Zoxide
 eval "$(zoxide init zsh)"
-
-# Mise
 eval "$(mise activate zsh)"
-
-# Plugins
-if [[ "$OS" == "macos" || "$OS" == "ubuntu" ]]; then
-  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [[ "$OS" == "arch" ]]; then
-  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+eval "$(fzf --zsh)"

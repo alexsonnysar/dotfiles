@@ -3,3 +3,5 @@
 [user]
 	name = Alexander Sar
 	email = 56088949+alexsonnysar@users.noreply.github.com
+[credential]
+	helper = store

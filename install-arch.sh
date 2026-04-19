@@ -21,8 +21,6 @@ PACKAGES=(
     zoxide
     fzf
     eza
-    zsh-syntax-highlighting
-    zsh-autosuggestions
     fastfetch
     mise
     wget
@@ -69,6 +67,12 @@ configure_shell() {
     success "Default shell set to Zsh."
 }
 
+install_zinit() {
+    log "🔌 Installing Zinit..."
+    bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+    success "Zinit installed."
+}
+
 stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
@@ -85,6 +89,7 @@ main() {
     install_prerequisites
     install_cli_tools
     configure_shell
+    install_zinit
     stow_dotfiles
     success "Dotfiles installed successfully."
 }
