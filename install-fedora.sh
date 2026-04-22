@@ -69,7 +69,7 @@ install_cli_tools() {
 
 configure_shell() {
     log "💲 Setting Zsh as default shell..."
-    sudo usermod -s "$(which zsh)" "$USER"
+    sudo chsh -s "$(which zsh)" "$USER"
     success "Default shell set to Zsh."
 }
 

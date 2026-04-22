@@ -25,6 +25,7 @@ source "${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git/zinit.zsh"
 
 # Plugins & Completion
 autoload -Uz compinit && compinit
+zinit ice atload'unalias zi'
 zinit light zsh-users/zsh-completions
 zinit light aloxaf/fzf-tab
 zinit light zsh-users/zsh-autosuggestions
@@ -37,6 +38,6 @@ alias lt="eza --tree --icons --git-ignore"
 
 # Shell Integrations
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
 eval "$(mise activate zsh)"
+eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
