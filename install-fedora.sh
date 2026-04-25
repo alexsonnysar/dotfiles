@@ -22,11 +22,13 @@ PACKAGES=(
     fastfetch
     starship
     mise
+    ghostty
 )
 
 COPR_REPOS=(
     atim/starship
     jdxcode/mise
+    scottamees/ghostty
 )
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
