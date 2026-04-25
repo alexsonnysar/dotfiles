@@ -89,7 +89,7 @@ stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
     stow --adopt */
-    # git restore .
+    git restore .
     success "Stow complete."
 }
 
