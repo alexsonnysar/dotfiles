@@ -10,10 +10,14 @@ PREREQUISITES=(
     wget
     zip
     unzip
+    zsh
+)
+
+DNF_GROUPS=(
+    development-tools
 )
 
 PACKAGES=(
-    zsh
     stow
     zoxide
     fzf
@@ -21,14 +25,12 @@ PACKAGES=(
     eza
     fastfetch
     starship
-    mise
-    ghostty
+    mise  
 )
 
 COPR_REPOS=(
     atim/starship
     jdxcode/mise
-    scottames/ghostty
 )
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
@@ -56,6 +58,8 @@ request_sudo() {
 
 install_prerequisites() {
     log "📦 Installing prerequisites..."
+    sudo dnf update -y && sudo dnf upgrade -y
+    sudo dnf group install -y "${DNF_GROUPS[@]}"
     sudo dnf install -y "${PREREQUISITES[@]}"
     success "Prerequisites installed."
 }
@@ -85,7 +89,7 @@ stow_dotfiles() {
     log "➡️ Stowing dotfiles..."
     cd "$DOTFILES_DIR"
     stow --adopt */
-    git restore .
+    # git restore .
     success "Stow complete."
 }
 
