@@ -28,7 +28,7 @@ PACKAGES=(
 COPR_REPOS=(
     atim/starship
     jdxcode/mise
-    scottamees/ghostty
+    scottames/ghostty
 )
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
