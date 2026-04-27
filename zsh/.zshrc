@@ -32,8 +32,8 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
 # Aliases
-alias ls="eza --icons"
-alias la="eza --all --icons"
+alias ls="eza --icons --long"
+alias la="eza --all --icons --long"
 alias lt="eza --tree --icons --git-ignore"
 
 # Shell Integrations
