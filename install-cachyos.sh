@@ -71,7 +71,7 @@ install_cli_tools() {
 
 install_gui_tools() {
     log "📦 Installing GUI tools..."
-    yay -S "${AUR_PACKAGES[@]}"
+    yay -S --noconfirm --needed "${AUR_PACKAGES[@]}"
     success "CLI tool installation complete."
 }
 
